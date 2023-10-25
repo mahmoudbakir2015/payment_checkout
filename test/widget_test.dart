@@ -13,7 +13,7 @@ import 'package:payment_checkout/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const PaypalPaymentDemo());
+    await tester.pumpWidget(const PaymentPage());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

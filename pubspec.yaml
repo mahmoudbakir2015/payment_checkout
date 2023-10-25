@@ -1,6 +1,6 @@
 name: payment_checkout
 description: This package simplifies integrating PayPal payments into your mobile app. Key features include seamless in-app PayPal integration
-
+homepage: https://github.com/mahmoudbakir2015/payment_checkout
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.

@@ -3,7 +3,6 @@ import 'package:payment_checkout/presentation/cart/cart_items.dart';
 import '../../core/widgets.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_button.dart';
-import '../payment_details/payment_details_items.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});

@@ -4,9 +4,7 @@ import 'package:svg_flutter/svg_flutter.dart';
 import '../constants/styles/text_styles.dart';
 
 AppBar customAppBar(
-    {required String title,
-    bool isNotCart = true,
-    required BuildContext context}) {
+    {String? title, bool isNotCart = true, required BuildContext context}) {
   return AppBar(
     iconTheme: const IconThemeData(color: Colors.black),
     elevation: 0,
@@ -25,7 +23,7 @@ AppBar customAppBar(
       ),
     ),
     title: Text(
-      title,
+      title ?? '',
       textAlign: TextAlign.center,
       style: MyTextStyle.style25,
     ),

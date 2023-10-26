@@ -4,25 +4,39 @@ import 'package:payment_checkout/widgets/custom_button.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../payment_done/payment_done_view.dart';
 
-class PaymentDetails extends StatelessWidget {
+class PaymentDetails extends StatefulWidget {
   const PaymentDetails({super.key});
+
+  @override
+  State<PaymentDetails> createState() => _PaymentDetailsState();
+}
+
+class _PaymentDetailsState extends State<PaymentDetails> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: 'Payment Details', context: context),
+      appBar: customAppBar(
+        title: 'Payment Details',
+        context: context,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20.0,
         ),
         child: CustomScrollView(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           slivers: [
             const SliverToBoxAdapter(
               child: ListViewCard(),
             ),
-            const SliverToBoxAdapter(
-              child: CreditCard(),
+            SliverToBoxAdapter(
+              child: CreditCard(
+                formKey: formKey,
+                autovalidateMode: autovalidateMode,
+              ),
             ),
             SliverFillRemaining(
               hasScrollBody: false,
@@ -35,11 +49,17 @@ class PaymentDetails extends StatelessWidget {
                     child: CustomButton(
                       text: 'Pay',
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const PaymentDoneView(),
-                          ),
-                        );
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const PaymentDoneView(),
+                            ),
+                          );
+                        } else {
+                          autovalidateMode = AutovalidateMode.always;
+                          setState(() {});
+                        }
                       },
                     ),
                   )),

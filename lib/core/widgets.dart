@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants/styles/color_styles.dart';
 import '../constants/styles/text_styles.dart';
 
 Padding buildTotalPrice({required String price}) {
@@ -32,12 +33,12 @@ Padding myDivider() {
     ),
     child: Container(
       width: 320,
-      decoration: const ShapeDecoration(
+      decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
           side: BorderSide(
             width: 2,
             strokeAlign: BorderSide.strokeAlignCenter,
-            color: Color(0xFFC6C6C6),
+            color: MyColors.secondaryColor,
           ),
         ),
       ),

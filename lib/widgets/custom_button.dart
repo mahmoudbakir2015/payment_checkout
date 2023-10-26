@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants/styles/color_styles.dart';
 import '../constants/styles/text_styles.dart';
 
 // ignore: must_be_immutable
@@ -19,7 +20,7 @@ class CustomButton extends StatelessWidget {
       child: Container(
         height: 60,
         decoration: ShapeDecoration(
-          color: const Color(0xFF34A853),
+          color: MyColors.defaultColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
+import '../../constants/styles/color_styles.dart';
 import '../../constants/styles/text_styles.dart';
 
 Row buildBarcodeWithButton() {
@@ -13,7 +14,7 @@ Row buildBarcodeWithButton() {
         height: 58,
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 1.50, color: Color(0xFF34A853)),
+            side: const BorderSide(width: 1.50, color: MyColors.defaultColor),
             borderRadius: BorderRadius.circular(15),
           ),
         ),
@@ -22,9 +23,7 @@ Row buildBarcodeWithButton() {
             'PAID',
             textAlign: TextAlign.center,
             style: MyTextStyle.style24.copyWith(
-              color: const Color(
-                0xFF34A853,
-              ),
+              color: MyColors.defaultColor,
             ),
           ),
         ),
@@ -33,31 +32,7 @@ Row buildBarcodeWithButton() {
   );
 }
 
-Padding buildDashDivider() {
-  return Padding(
-    padding: const EdgeInsets.only(
-      bottom: 57,
-    ),
-    child: SizedBox(
-      height: 2,
-      child: ListView.separated(
-        separatorBuilder: (context, index) => const SizedBox(
-          width: 2,
-        ),
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Container(
-            color: const Color(0xFFB7B7B7),
-            width: 7,
-          );
-        },
-        itemCount: 40,
-      ),
-    ),
-  );
-}
-
-Padding buidTypeCard(
+Padding buidCreditCardInfo(
     {required String image,
     required String nameCard,
     required String last2digit}) {
@@ -105,7 +80,7 @@ Padding buidTypeCard(
   );
 }
 
-Padding buildDetailsPay({required String title, required String answer}) {
+Padding buildDetailsPay({required String title, required String value}) {
   return Padding(
     padding: const EdgeInsets.only(
       bottom: 20,
@@ -119,7 +94,7 @@ Padding buildDetailsPay({required String title, required String answer}) {
           style: MyTextStyle.style18,
         ),
         Text(
-          answer,
+          value,
           style: MyTextStyle.style18.copyWith(
             fontWeight: FontWeight.w600,
           ),
@@ -140,5 +115,71 @@ Positioned buildBack(BuildContext context) {
         'assets/images/arrow_back.svg',
       ),
     ),
+  );
+}
+
+Positioned buildStatus() {
+  return Positioned(
+    top: -50,
+    left: 0,
+    right: 0,
+    child: CircleAvatar(
+      backgroundColor: MyColors.secondaryColor,
+      radius: 50,
+      child: CircleAvatar(
+        backgroundColor: MyColors.defaultColor,
+        radius: 40,
+        child: Center(
+          child: SvgPicture.asset(
+            'assets/images/check.svg',
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Positioned buildDashAndCircle(BuildContext context) {
+  return Positioned(
+      bottom: MediaQuery.of(context).size.height * 0.15,
+      left: -20,
+      right: -20,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          buildCircle(),
+          buildDashLine(),
+          buildCircle(),
+        ],
+      ));
+}
+
+Expanded buildDashLine() {
+  return Expanded(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: SizedBox(
+        height: 2,
+        child: ListView.separated(
+          separatorBuilder: (context, index) => const SizedBox(
+            width: 2,
+          ),
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Container(
+              color: MyColors.dashColor,
+              width: 7,
+            );
+          },
+          itemCount: 40,
+        ),
+      ),
+    ),
+  );
+}
+
+CircleAvatar buildCircle() {
+  return const CircleAvatar(
+    backgroundColor: Colors.white,
   );
 }

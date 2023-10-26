@@ -107,8 +107,12 @@ class _ListViewCardState extends State<ListViewCard> {
 }
 
 class CreditCard extends StatefulWidget {
+  final GlobalKey<FormState> formKey;
+  final AutovalidateMode autovalidateMode;
   const CreditCard({
     super.key,
+    required this.formKey,
+    required this.autovalidateMode,
   });
 
   @override
@@ -118,8 +122,6 @@ class CreditCard extends StatefulWidget {
 class _CreditCardState extends State<CreditCard> {
   String cardNumber = '', expiryDate = '', cardHolderName = '', cvvCode = '';
   bool isCvvFocused = false;
-
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +139,7 @@ class _CreditCardState extends State<CreditCard> {
               brand) {}, // Callback for anytime credit card brand is changed
         ),
         CreditCardForm(
+          autovalidateMode: widget.autovalidateMode,
           cardNumber: cardNumber,
           expiryDate: expiryDate,
           cardHolderName: cardHolderName,
@@ -149,7 +152,7 @@ class _CreditCardState extends State<CreditCard> {
             isCvvFocused = CreditCardModel.isCvvFocused;
             setState(() {});
           },
-          formKey: formKey,
+          formKey: widget.formKey,
         ),
       ],
     );

@@ -10,8 +10,11 @@ class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          customAppBar(title: 'My Cart', context: context, isNotCart: false),
+      appBar: customAppBar(
+        title: 'My Cart',
+        context: context,
+        isNotCart: false,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -24,23 +27,36 @@ class CartView extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            buildDetailsPay(text: 'Order Subtotal', price: '42.97'),
-            buildDetailsPay(text: 'Discount', price: '0'),
-            buildDetailsPay(text: 'Shipping', price: '8'),
+            buildDetailsPay(
+              text: 'Order Subtotal',
+              price: '42.97',
+            ),
+            buildDetailsPay(
+              text: 'Discount',
+              price: '0',
+            ),
+            buildDetailsPay(
+              text: 'Shipping',
+              price: '8',
+            ),
             myDivider(),
-            buildTotalPrice(price: '50.97'),
+            buildTotalPrice(
+              price: '50.97',
+            ),
             CustomButton(
               onTap: () {
                 showModalBottomSheet(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
-                    )),
-                    context: (context),
-                    builder: (context) {
-                      return const BottomSheetView();
-                    });
+                    ),
+                  ),
+                  context: (context),
+                  builder: (context) {
+                    return const BottomSheetView();
+                  },
+                );
                 // Navigator.of(context).push(
                 //   MaterialPageRoute(
                 //     builder: (context) => const PaymentDetails(),

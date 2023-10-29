@@ -35,6 +35,9 @@ dependencies:
   flutter_credit_card: ^4.0.1
   flutter_inappwebview: ^5.8.0
   svg_flutter: ^0.0.1
+  flutter_stripe: any
+  flutter_bloc: ^8.1.3
+  bloc: ^8.1.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

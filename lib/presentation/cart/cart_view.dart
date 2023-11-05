@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:payment_checkout/controller/cubit/payment_states.dart';
+import 'package:payment_checkout/data/model/payment_input/payment_input.dart';
 import 'package:payment_checkout/presentation/cart/cart_items.dart';
+import '../../controller/cubit/payment_cubit.dart';
 import '../../core/widgets.dart';
+import '../../data/repo/check_out_repo_imp.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_button.dart';
+import '../payment_done/payment_done_view.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -54,7 +60,10 @@ class CartView extends StatelessWidget {
                   ),
                   context: (context),
                   builder: (context) {
-                    return const BottomSheetView();
+                    return BlocProvider(
+                      create: (context) => PaymentCubit(CheckoutRepoImp()),
+                      child: const BottomSheetView(),
+                    );
                   },
                 );
                 // Navigator.of(context).push(
@@ -86,7 +95,32 @@ class BottomSheetView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const ListViewCard(),
-          CustomButton(text: 'complete'),
+          BlocConsumer<PaymentCubit, PaymentStates>(
+            listener: (context, state) {
+              if (state is PaymentSuccessState) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const PaymentDoneView()));
+              }
+              if (state is PaymentFailedState) {
+                SnackBar snackBar = SnackBar(content: Text(state.errorMessage));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            },
+            builder: (context, state) {
+              return CustomButton(
+                onTap: () {
+                  PaymentInput paymentInput = PaymentInput(
+                    amount: '100',
+                    currency: 'USD',
+                  );
+                  BlocProvider.of<PaymentCubit>(context)
+                      .makePayment(paymentIntentInput: paymentInput);
+                },
+                isLoading: state is PaymentLoadingState ? true : false,
+                text: 'complete',
+              );
+            },
+          ),
         ],
       ),
     );

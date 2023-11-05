@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:payment_checkout/constants/strings/api_keys.dart';
+import 'package:payment_checkout/core/observer.dart';
 import 'package:payment_checkout/presentation/cart/cart_view.dart';
 
 void main() async {
+  Bloc.observer = MyBlocObserver();
   Stripe.publishableKey = ApiKeys.stripePublishableKey;
 
   runApp(const PaymentPage());

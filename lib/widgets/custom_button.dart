@@ -6,10 +6,12 @@ import '../constants/styles/text_styles.dart';
 // ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
   final String text;
+  final bool isLoading;
   void Function()? onTap;
   CustomButton({
     super.key,
     this.onTap,
+    this.isLoading = false,
     required this.text,
   });
 
@@ -26,11 +28,13 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: MyTextStyle.style22,
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator()
+              : Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: MyTextStyle.style22,
+                ),
         ),
       ),
     );

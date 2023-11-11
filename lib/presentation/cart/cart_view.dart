@@ -66,11 +66,6 @@ class CartView extends StatelessWidget {
                     );
                   },
                 );
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => const PaymentDetails(),
-                //   ),
-                // );
               },
               text: 'Complete Payment',
             ),
@@ -102,6 +97,7 @@ class BottomSheetView extends StatelessWidget {
                     builder: (context) => const PaymentDoneView()));
               }
               if (state is PaymentFailedState) {
+                Navigator.of(context).pop();
                 SnackBar snackBar = SnackBar(content: Text(state.errorMessage));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }

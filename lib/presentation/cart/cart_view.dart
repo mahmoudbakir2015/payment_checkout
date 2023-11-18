@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:payment_checkout/constants/strings/api_keys.dart';
 import 'package:payment_checkout/controller/cubit/payment_states.dart';
 import 'package:payment_checkout/data/model/payment_input/payment_input.dart';
 import 'package:payment_checkout/presentation/cart/cart_items.dart';
@@ -108,6 +109,7 @@ class BottomSheetView extends StatelessWidget {
                   PaymentInput paymentInput = PaymentInput(
                     amount: '100',
                     currency: 'USD',
+                    customerId: ApiKeys.customerId,
                   );
                   BlocProvider.of<PaymentCubit>(context)
                       .makePayment(paymentIntentInput: paymentInput);

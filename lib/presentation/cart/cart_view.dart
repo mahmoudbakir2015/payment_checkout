@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_checkout/constants/strings/api_keys.dart';
-import 'package:payment_checkout/controller/cubit/payment_states.dart';
+import 'package:payment_checkout/controller/cubit/auth/auth_cubit.dart';
+import 'package:payment_checkout/controller/cubit/payment/payment_states.dart';
 import 'package:payment_checkout/data/model/payment_input/payment_input.dart';
 import 'package:payment_checkout/presentation/cart/cart_items.dart';
-import '../../controller/cubit/payment_cubit.dart';
+import '../../controller/cubit/payment/payment_cubit.dart';
 import '../../core/widgets.dart';
 import '../../data/repo/check_out_repo_imp.dart';
 import '../../widgets/custom_app_bar.dart';
@@ -18,10 +19,18 @@ class CartView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(
-        title: 'My Cart',
-        context: context,
-        isNotCart: false,
-      ),
+          title: 'My Cart',
+          context: context,
+          isNotCart: false,
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  BlocProvider.of<AuthCubit>(context).logout(context: context);
+                },
+                child: const Icon(
+                  Icons.exit_to_app,
+                )),
+          ]),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,

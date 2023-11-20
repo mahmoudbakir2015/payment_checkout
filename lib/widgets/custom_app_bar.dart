@@ -3,9 +3,14 @@ import 'package:svg_flutter/svg_flutter.dart';
 
 import '../constants/styles/text_styles.dart';
 
-AppBar customAppBar(
-    {String? title, bool isNotCart = true, required BuildContext context}) {
+AppBar customAppBar({
+  String? title,
+  bool isNotCart = true,
+  required BuildContext context,
+  List<Widget>? actions,
+}) {
   return AppBar(
+    actions: actions,
     iconTheme: const IconThemeData(color: Colors.black),
     elevation: 0,
     backgroundColor: Colors.transparent,

@@ -36,12 +36,10 @@ class PaymentPage extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         // ignore: unrelated_type_equality_checks
         home: (CacheHelper.getDataBool(key: 'isCreated') == true)
-            ? const CartView()
+            ? CartView(
+                uid: CacheHelper.getData(key: 'uid')!,
+              )
             : const LoginScreen(),
-
-        // (BlocProvider.of<AuthCubit>(context).credential != null)
-        //     ? const CartView()
-        //     : const LoginScreen(),
       ),
     );
   }

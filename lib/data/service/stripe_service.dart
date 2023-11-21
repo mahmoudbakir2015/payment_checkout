@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:payment_checkout/core/utils/api_service.dart';
 import 'package:payment_checkout/data/model/payment_intent_model/payment_intent_model.dart';
-
 import '../../constants/strings/api_keys.dart';
 import '../model/ephemeral_key_model/ephemeral_key_model.dart';
 import '../model/init_payment_sheet_input/init_payment_sheet_input.dart';
@@ -62,9 +61,11 @@ class StripeService {
 
   Future makePayment({
     required PaymentInput paymentInput,
+    required context,
+    required String customerId,
   }) async {
     var paymentIntentInputModel = await createPaymentIntent(paymentInput);
-    var ephemeralKey = await createEphemeralKey(customerId: ApiKeys.customerId);
+    var ephemeralKey = await createEphemeralKey(customerId: customerId);
     InitPaymentInputSheet initPaymentInputSheet = InitPaymentInputSheet(
       clientSecret: paymentIntentInputModel.clientSecret!,
       customerId: paymentInput.customerId,

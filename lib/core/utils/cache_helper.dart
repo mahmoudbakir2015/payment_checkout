@@ -6,7 +6,7 @@ class CacheHelper {
     pref = await SharedPreferences.getInstance();
   }
 
-  static Future putData({
+  static Future putDataBool({
     required bool value,
     required String key,
   }) async {
@@ -24,15 +24,15 @@ class CacheHelper {
     );
   }
 
-  static dynamic getData({
+  static String? getData({
     required String key,
-  }) async {
-    return pref?.get(
+  }) {
+    return pref?.getString(
       key,
     );
   }
 
-  static Future<bool?> saveData({
+  static Future<dynamic> saveData({
     required String key,
     required dynamic value,
   }) async {

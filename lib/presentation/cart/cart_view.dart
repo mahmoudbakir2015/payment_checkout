@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:payment_checkout/constants/strings/api_keys.dart';
 import 'package:payment_checkout/controller/cubit/auth/auth_cubit.dart';
 import 'package:payment_checkout/controller/cubit/payment/payment_states.dart';
 import 'package:payment_checkout/data/model/payment_input/payment_input.dart';
@@ -12,8 +12,10 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_button.dart';
 import '../payment_done/payment_done_view.dart';
 
+// ignore: must_be_immutable
 class CartView extends StatelessWidget {
-  const CartView({super.key});
+  final String uid;
+  const CartView({super.key, required this.uid});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CartView extends StatelessWidget {
           actions: [
             GestureDetector(
                 onTap: () {
-                  BlocProvider.of<AuthCubit>(context).logout(context: context);
+                  BlocProvider.of<AuthCubit>(context).logOut(context: context);
                 },
                 child: const Icon(
                   Icons.exit_to_app,
@@ -60,7 +62,10 @@ class CartView extends StatelessWidget {
               price: '50.97',
             ),
             CustomButton(
-              onTap: () {
+              onTap: () async {
+                DocumentReference docRef =
+                    FirebaseFirestore.instance.collection('users').doc(uid);
+                DocumentSnapshot doc = await docRef.get();
                 showModalBottomSheet(
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -72,7 +77,9 @@ class CartView extends StatelessWidget {
                   builder: (context) {
                     return BlocProvider(
                       create: (context) => PaymentCubit(CheckoutRepoImp()),
-                      child: const BottomSheetView(),
+                      child: BottomSheetView(
+                        customerId: doc.get('customerId').toString(),
+                      ),
                     );
                   },
                 );
@@ -90,7 +97,9 @@ class CartView extends StatelessWidget {
 }
 
 class BottomSheetView extends StatelessWidget {
-  const BottomSheetView({super.key});
+  final String customerId;
+
+  const BottomSheetView({super.key, required this.customerId});
 
   @override
   Widget build(BuildContext context) {
@@ -114,14 +123,16 @@ class BottomSheetView extends StatelessWidget {
             },
             builder: (context, state) {
               return CustomButton(
-                onTap: () {
+                onTap: () async {
                   PaymentInput paymentInput = PaymentInput(
                     amount: '100',
                     currency: 'USD',
-                    customerId: ApiKeys.customerId,
+                    customerId: customerId,
                   );
-                  BlocProvider.of<PaymentCubit>(context)
-                      .makePayment(paymentIntentInput: paymentInput);
+                  BlocProvider.of<PaymentCubit>(context).makePayment(
+                      paymentIntentInput: paymentInput,
+                      context: context,
+                      customerId: customerId);
                 },
                 isLoading: state is PaymentLoadingState ? true : false,
                 text: 'complete',

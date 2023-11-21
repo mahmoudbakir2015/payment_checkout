@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_checkout/presentation/auth/register/register.dart';
 import 'package:payment_checkout/presentation/cart/cart_view.dart';
-
 import '../../../controller/cubit/auth/auth_cubit.dart';
 import '../../../controller/cubit/auth/auth_states.dart';
+import '../../../core/utils/cache_helper.dart';
 import '../../../widgets/default_text_form.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -16,7 +16,10 @@ class LoginScreen extends StatelessWidget {
       if (state is AuthSuccessLogin) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const CartView()),
+            MaterialPageRoute(
+                builder: (context) => CartView(
+                      uid: CacheHelper.getData(key: 'uid')!,
+                    )),
             (route) => false);
       }
       if (state is AuthFailureLogin) {

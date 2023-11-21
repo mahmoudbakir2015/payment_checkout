@@ -9,9 +9,12 @@ class CheckoutRepoImp extends CheckOutRepo {
 
   @override
   Future<Either<Failure, void>> makePayment(
-      {required PaymentInput paymentInput}) async {
+      {required PaymentInput paymentInput,
+      required context,
+      required String customerId}) async {
     try {
-      await stripeService.makePayment(paymentInput: paymentInput);
+      await stripeService.makePayment(
+          paymentInput: paymentInput, context: context, customerId: customerId);
       return const Right(null);
     } catch (e) {
       return left(

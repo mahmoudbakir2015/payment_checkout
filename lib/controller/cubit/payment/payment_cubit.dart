@@ -7,9 +7,15 @@ class PaymentCubit extends Cubit<PaymentStates> {
   PaymentCubit(this.checkOutRepo) : super(PaymentInitialState());
   static PaymentCubit get(context) => BlocProvider.of(context);
 
-  Future makePayment({required paymentIntentInput}) async {
+  Future makePayment(
+      {required paymentIntentInput,
+      required context,
+      required String customerId}) async {
     emit(PaymentLoadingState());
-    var data = await checkOutRepo.makePayment(paymentInput: paymentIntentInput);
+    var data = await checkOutRepo.makePayment(
+        paymentInput: paymentIntentInput,
+        context: context,
+        customerId: customerId);
     data.fold(
       (l) => emit(PaymentFailedState(errorMessage: l.errMessage)),
       (r) => emit(PaymentSuccessState()),

@@ -122,8 +122,7 @@ class BottomSheetView extends StatelessWidget {
               }
               if (state is PaymentFailedState) {
                 Navigator.of(context).pop();
-                SnackBar snackBar = SnackBar(content: Text(state.errorMessage));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                showSnackBar(messages: state.errorMessage, context: context);
               }
             },
             builder: (context, state) {
@@ -197,7 +196,10 @@ class BottomSheetView extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         onError: (error) {
+                          showSnackBar(
+                              messages: error.toString(), context: context);
                           log("onError: $error");
+
                           Navigator.pop(context);
                         },
                         onCancel: () {
@@ -216,5 +218,10 @@ class BottomSheetView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void showSnackBar({required String messages, required BuildContext context}) {
+    SnackBar snackBar = SnackBar(content: Text(messages));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

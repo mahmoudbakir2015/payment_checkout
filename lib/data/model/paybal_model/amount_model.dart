@@ -3,7 +3,8 @@ class AmountPaybalModel {
   String? currency;
   Details? details;
 
-  AmountPaybalModel({this.total, this.currency, this.details});
+  AmountPaybalModel(
+      {required this.total, required this.currency, required this.details});
 
   AmountPaybalModel.fromJson(Map<String, dynamic> json) {
     total = json['total'];
@@ -28,7 +29,10 @@ class Details {
   String? shipping;
   int? shippingDiscount;
 
-  Details({this.subtotal, this.shipping, this.shippingDiscount});
+  Details(
+      {required this.subtotal,
+      required this.shipping,
+      required this.shippingDiscount});
 
   Details.fromJson(Map<String, dynamic> json) {
     subtotal = json['subtotal'];

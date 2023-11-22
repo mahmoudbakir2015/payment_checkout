@@ -1,7 +1,7 @@
 class ItemsPaybalModel {
   List<Items>? items;
 
-  ItemsPaybalModel({this.items});
+  ItemsPaybalModel({required this.items});
 
   ItemsPaybalModel.fromJson(Map<String, dynamic> json) {
     if (json['items'] != null) {
@@ -27,7 +27,11 @@ class Items {
   String? price;
   String? currency;
 
-  Items({this.name, this.quantity, this.price, this.currency});
+  Items(
+      {required this.name,
+      required this.quantity,
+      required this.price,
+      required this.currency});
 
   Items.fromJson(Map<String, dynamic> json) {
     name = json['name'];

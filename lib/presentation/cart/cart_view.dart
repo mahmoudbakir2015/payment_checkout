@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:payment_checkout/constants/strings/api_keys.dart';
 import 'package:payment_checkout/controller/cubit/auth/auth_cubit.dart';
 import 'package:payment_checkout/controller/cubit/payment/payment_states.dart';
 import 'package:payment_checkout/data/model/payment_input/payment_input.dart';
 import 'package:payment_checkout/presentation/cart/cart_items.dart';
 import '../../controller/cubit/payment/payment_cubit.dart';
 import '../../core/widgets.dart';
+import '../../data/model/paybal_model/amount_model.dart';
+import '../../data/model/paybal_model/items_model.dart';
 import '../../data/repo/check_out_repo_imp.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_button.dart';
@@ -138,41 +141,54 @@ class BottomSheetView extends StatelessWidget {
                         context: context,
                         customerId: customerId);
                   } else {
+                    var amountPaybalModel = AmountPaybalModel(
+                      total: '100',
+                      currency: 'USD',
+                      details: Details(
+                        subtotal: '100',
+                        shipping: '0',
+                        shippingDiscount: 0,
+                      ),
+                    );
+                    var itemsPaybalModel = ItemsPaybalModel(items: [
+                      Items(
+                          name: 'bag',
+                          quantity: 1,
+                          price: '20',
+                          currency: 'USD'),
+                      Items(
+                          name: 'book',
+                          quantity: 1,
+                          price: '40',
+                          currency: 'USD'),
+                      Items(
+                          name: 'chair',
+                          quantity: 1,
+                          price: '20',
+                          currency: 'USD'),
+                      Items(
+                          name: 'desk',
+                          quantity: 1,
+                          price: '10',
+                          currency: 'USD'),
+                      Items(
+                          name: 'pen',
+                          quantity: 1,
+                          price: '10',
+                          currency: 'USD'),
+                    ]);
 // to check payment Paybal
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) => PaypalCheckoutView(
                         sandboxMode: true,
-                        clientId: "YOUR CLIENT ID",
-                        secretKey: "YOUR SECRET KEY",
-                        transactions: const [
+                        clientId: ApiKeys.clientPaybalId,
+                        secretKey: ApiKeys.clientPaybalSecret,
+                        transactions: [
                           {
-                            "amount": {
-                              "total": '100',
-                              "currency": "USD",
-                              "details": {
-                                "subtotal": '100',
-                                "shipping": '0',
-                                "shipping_discount": 0
-                              }
-                            },
+                            "amount": amountPaybalModel.toJson(),
                             "description":
                                 "The payment transaction description.",
-                            "item_list": {
-                              "items": [
-                                {
-                                  "name": "Apple",
-                                  "quantity": 4,
-                                  "price": '10',
-                                  "currency": "USD"
-                                },
-                                {
-                                  "name": "Pineapple",
-                                  "quantity": 5,
-                                  "price": '12',
-                                  "currency": "USD"
-                                }
-                              ],
-                            }
+                            "item_list": itemsPaybalModel.toJson(),
                           }
                         ],
                         note: "Contact us for any questions on your order.",

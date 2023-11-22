@@ -4,15 +4,16 @@ import 'package:payment_checkout/data/repo/check_out_repo.dart';
 
 class PaymentCubit extends Cubit<PaymentStates> {
   final CheckOutRepo checkOutRepo;
+  bool isStripe = true;
   PaymentCubit(this.checkOutRepo) : super(PaymentInitialState());
   static PaymentCubit get(context) => BlocProvider.of(context);
 
-  Future makePayment(
+  Future makePaymentStripe(
       {required paymentIntentInput,
       required context,
       required String customerId}) async {
     emit(PaymentLoadingState());
-    var data = await checkOutRepo.makePayment(
+    var data = await checkOutRepo.makePaymentStripe(
         paymentInput: paymentIntentInput,
         context: context,
         customerId: customerId);

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:payment_checkout/controller/cubit/payment/payment_cubit.dart';
 
 import '../constants/styles/color_styles.dart';
 import '../constants/styles/text_styles.dart';
@@ -15,7 +17,6 @@ class _ListViewCardState extends State<ListViewCard> {
   List<String> imagePath = [
     'assets/images/card.svg',
     'assets/images/paypal.svg',
-    'assets/images/applepay.svg',
   ];
 
   int active = 0;
@@ -34,6 +35,11 @@ class _ListViewCardState extends State<ListViewCard> {
           itemBuilder: (context, index) => GestureDetector(
             onTap: () {
               active = index;
+              if (active == 0) {
+                BlocProvider.of<PaymentCubit>(context).isStripe = true;
+              } else {
+                BlocProvider.of<PaymentCubit>(context).isStripe = false;
+              }
               setState(() {});
             },
             child: CustomPaymentType(

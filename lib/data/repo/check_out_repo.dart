@@ -3,7 +3,7 @@ import '../../core/failures.dart';
 import '../model/payment_input/payment_input.dart';
 
 abstract class CheckOutRepo {
-  Future<Either<Failure, void>> makePayment({
+  Future<Either<Failure, void>> makePaymentStripe({
     required PaymentInput paymentInput,
     required context,
     required String customerId,

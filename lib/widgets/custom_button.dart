@@ -7,6 +7,7 @@ import '../constants/styles/text_styles.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final bool isLoading;
+
   void Function()? onTap;
   CustomButton({
     super.key,

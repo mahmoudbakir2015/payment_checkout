@@ -11,6 +11,8 @@ import '../../data/repo/check_out_repo_imp.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_button.dart';
 import '../payment_done/payment_done_view.dart';
+import 'dart:developer';
+import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 
 // ignore: must_be_immutable
 class CartView extends StatelessWidget {
@@ -124,15 +126,71 @@ class BottomSheetView extends StatelessWidget {
             builder: (context, state) {
               return CustomButton(
                 onTap: () async {
-                  PaymentInput paymentInput = PaymentInput(
-                    amount: '100',
-                    currency: 'USD',
-                    customerId: customerId,
-                  );
-                  BlocProvider.of<PaymentCubit>(context).makePayment(
-                      paymentIntentInput: paymentInput,
-                      context: context,
-                      customerId: customerId);
+                  if (BlocProvider.of<PaymentCubit>(context).isStripe == true) {
+                    // to check card in stripe
+                    PaymentInput paymentInput = PaymentInput(
+                      amount: '100',
+                      currency: 'USD',
+                      customerId: customerId,
+                    );
+                    BlocProvider.of<PaymentCubit>(context).makePaymentStripe(
+                        paymentIntentInput: paymentInput,
+                        context: context,
+                        customerId: customerId);
+                  } else {
+// to check payment Paybal
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => PaypalCheckoutView(
+                        sandboxMode: true,
+                        clientId: "YOUR CLIENT ID",
+                        secretKey: "YOUR SECRET KEY",
+                        transactions: const [
+                          {
+                            "amount": {
+                              "total": '100',
+                              "currency": "USD",
+                              "details": {
+                                "subtotal": '100',
+                                "shipping": '0',
+                                "shipping_discount": 0
+                              }
+                            },
+                            "description":
+                                "The payment transaction description.",
+                            "item_list": {
+                              "items": [
+                                {
+                                  "name": "Apple",
+                                  "quantity": 4,
+                                  "price": '10',
+                                  "currency": "USD"
+                                },
+                                {
+                                  "name": "Pineapple",
+                                  "quantity": 5,
+                                  "price": '12',
+                                  "currency": "USD"
+                                }
+                              ],
+                            }
+                          }
+                        ],
+                        note: "Contact us for any questions on your order.",
+                        onSuccess: (Map params) async {
+                          log("onSuccess: $params");
+                          Navigator.pop(context);
+                        },
+                        onError: (error) {
+                          log("onError: $error");
+                          Navigator.pop(context);
+                        },
+                        onCancel: () {
+                          print('cancelled:');
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ));
+                  }
                 },
                 isLoading: state is PaymentLoadingState ? true : false,
                 text: 'complete',

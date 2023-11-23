@@ -67,32 +67,32 @@ class CreateCustomerModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['object'] = this.object;
-    data['address'] = this.address;
-    data['balance'] = this.balance;
-    data['created'] = this.created;
-    data['currency'] = this.currency;
-    data['default_source'] = this.defaultSource;
-    data['delinquent'] = this.delinquent;
-    data['description'] = this.description;
-    data['discount'] = this.discount;
-    data['email'] = this.email;
-    data['invoice_prefix'] = this.invoicePrefix;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['object'] = object;
+    data['address'] = address;
+    data['balance'] = balance;
+    data['created'] = created;
+    data['currency'] = currency;
+    data['default_source'] = defaultSource;
+    data['delinquent'] = delinquent;
+    data['description'] = description;
+    data['discount'] = discount;
+    data['email'] = email;
+    data['invoice_prefix'] = invoicePrefix;
 
-    data['livemode'] = this.livemode;
+    data['livemode'] = livemode;
 
-    data['name'] = this.name;
-    data['next_invoice_sequence'] = this.nextInvoiceSequence;
-    data['phone'] = this.phone;
-    if (this.preferredLocales != null) {
+    data['name'] = name;
+    data['next_invoice_sequence'] = nextInvoiceSequence;
+    data['phone'] = phone;
+    if (preferredLocales != null) {
       data['preferred_locales'] =
-          this.preferredLocales!.map((v) => v.toJson()).toList();
+          preferredLocales!.map((v) => v.toJson()).toList();
     }
-    data['shipping'] = this.shipping;
-    data['tax_exempt'] = this.taxExempt;
-    data['test_clock'] = this.testClock;
+    data['shipping'] = shipping;
+    data['tax_exempt'] = taxExempt;
+    data['test_clock'] = testClock;
     return data;
   }
 }

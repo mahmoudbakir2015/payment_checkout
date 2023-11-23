@@ -58,10 +58,8 @@ class AuthCubit extends Cubit<AuthState> {
       });
 
       await CacheHelper.saveData(key: 'isCreated', value: true);
-      var uid = await CacheHelper.saveData(key: 'uid', value: value.user!.uid)
-          .toString();
-      print(
-          '******** from register Screen${CacheHelper.getDataBool(key: 'isCreated')}');
+      var uid =
+          CacheHelper.saveData(key: 'uid', value: value.user!.uid).toString();
       emit(AuthSuccessRegister(uid: uid));
     }).catchError((error) {
       emit(AuthFailureRegister(errorMessage: error.toString()));
@@ -78,12 +76,9 @@ class AuthCubit extends Cubit<AuthState> {
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) async {
       await CacheHelper.saveData(key: 'isCreated', value: true);
-      var uid = await CacheHelper.saveData(key: 'uid', value: value.user!.uid)
-          .toString();
+      var uid =
+          CacheHelper.saveData(key: 'uid', value: value.user!.uid).toString();
       emit(AuthSuccessLogin(uid: uid));
-
-      print(
-          '******** from login Screen ${CacheHelper.getDataBool(key: 'isCreated')}');
     }).catchError((error) {
       emit(AuthFailureLogin(errorMessage: error.toString()));
     });
@@ -92,7 +87,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logOut({required context}) async {
     await FirebaseAuth.instance.signOut();
     await CacheHelper.saveData(key: 'isCreated', value: false);
-    print(CacheHelper.getDataBool(key: 'isCreated'));
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),

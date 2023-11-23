@@ -7,15 +7,15 @@ class ItemsPaybalModel {
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.items != null) {
-      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (items != null) {
+      data['items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -41,11 +41,11 @@ class Items {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['quantity'] = this.quantity;
-    data['price'] = this.price;
-    data['currency'] = this.currency;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['quantity'] = quantity;
+    data['price'] = price;
+    data['currency'] = currency;
     return data;
   }
 }

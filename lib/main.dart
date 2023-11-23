@@ -32,7 +32,7 @@ class PaymentPage extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Payments',
+        title: 'Payment',
         debugShowCheckedModeBanner: false,
         // ignore: unrelated_type_equality_checks
         home: (CacheHelper.getDataBool(key: 'isCreated') == true)

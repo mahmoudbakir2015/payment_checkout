@@ -71,6 +71,7 @@ class CartView extends StatelessWidget {
                 DocumentReference docRef =
                     FirebaseFirestore.instance.collection('users').doc(uid);
                 DocumentSnapshot doc = await docRef.get();
+                // ignore: use_build_context_synchronously
                 showModalBottomSheet(
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -203,7 +204,6 @@ class BottomSheetView extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         onCancel: () {
-                          print('cancelled:');
                           Navigator.pop(context);
                         },
                       ),

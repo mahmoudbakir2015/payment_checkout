@@ -22,7 +22,7 @@ class EphemeralKeyModel {
     if (json['associated_objects'] != null) {
       associatedObjects = <AssociatedObjects>[];
       json['associated_objects'].forEach((v) {
-        associatedObjects!.add(new AssociatedObjects.fromJson(v));
+        associatedObjects!.add(AssociatedObjects.fromJson(v));
       });
     }
     created = json['created'];
@@ -32,17 +32,17 @@ class EphemeralKeyModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['object'] = this.object;
-    if (this.associatedObjects != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['object'] = object;
+    if (associatedObjects != null) {
       data['associated_objects'] =
-          this.associatedObjects!.map((v) => v.toJson()).toList();
+          associatedObjects!.map((v) => v.toJson()).toList();
     }
-    data['created'] = this.created;
-    data['expires'] = this.expires;
-    data['livemode'] = this.livemode;
-    data['secret'] = this.secret;
+    data['created'] = created;
+    data['expires'] = expires;
+    data['livemode'] = livemode;
+    data['secret'] = secret;
     return data;
   }
 }
@@ -59,9 +59,9 @@ class AssociatedObjects {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['type'] = type;
     return data;
   }
 }

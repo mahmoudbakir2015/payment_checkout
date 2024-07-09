@@ -11,10 +11,10 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = ApiKeys.stripePublishableKey;
   await CacheHelper.init();
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
-  Stripe.publishableKey = ApiKeys.stripePublishableKey;
 
   runApp(const PaymentPage());
 }

@@ -27,7 +27,7 @@ class StripeService {
       {required String customerId}) async {
     var response = await apiService.post(
       headers: {
-        'Stripe-Version': '2023-10-16',
+        'Stripe-Version': '2024-06-20',
         'Authorization': "Bearer ${ApiKeys.stripeSecretKey}",
       },
       body: {
@@ -61,7 +61,6 @@ class StripeService {
 
   Future makePayment({
     required PaymentInput paymentInput,
-    required context,
     required String customerId,
   }) async {
     var paymentIntentInputModel = await createPaymentIntent(paymentInput);
@@ -77,16 +76,3 @@ class StripeService {
     await displayPaymentSheet();
   }
 }
-
-
-
-/**
- * Future<PaymentIntentModel> createPaymentIntent(
-      PaymentInput paymentInput) async {
-    Response response = await DioHelper.postData(
-      endPoint: paymentIntents,
-      data: paymentInput.toJson(),
-    );
-    return PaymentIntentModel.fromJson(response.data);
-  }
- */

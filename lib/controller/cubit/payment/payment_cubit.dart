@@ -14,9 +14,7 @@ class PaymentCubit extends Cubit<PaymentStates> {
       required String customerId}) async {
     emit(PaymentLoadingState());
     var data = await checkOutRepo.makePaymentStripe(
-        paymentInput: paymentIntentInput,
-        context: context,
-        customerId: customerId);
+        paymentInput: paymentIntentInput, customerId: customerId);
     data.fold(
       (l) => emit(PaymentFailedState(errorMessage: l.errMessage)),
       (r) => emit(PaymentSuccessState()),

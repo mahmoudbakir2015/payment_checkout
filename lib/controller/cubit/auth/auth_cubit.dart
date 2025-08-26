@@ -42,8 +42,8 @@ class AuthCubit extends Cubit<AuthState> {
         .then((value) async {
       var response = await apiService.post(
         body: {
-          'email',
-          email.text,
+          'email': email.text.toString(),
+          'name': email.text.toString().split('@')[0],
         },
         contentType: Headers.formUrlEncodedContentType,
         url: 'https://api.stripe.com/v1/customers',
